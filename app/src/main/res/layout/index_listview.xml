@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+            android:layout_weight="1"
+            android:id="@+id/indexCard1"
+            android:layout_width="0dp"
+            android:layout_margin="8dp"
+            app:cardElevation="10dp"
+            app:cardCornerRadius="5dp"
+            android:layout_height="wrap_content">
+
+
+    <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        <ImageView
+                android:id="@+id/itemImg"
+                android:maxHeight="150dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_menu_gallery"
+                android:adjustViewBounds="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                    android:textAlignment="center"
+                    android:layout_margin="5dp"
+                    android:text="name"
+                    android:singleLine="true"
+                    android:maxEms="15"
+
+                    android:id="@+id/itemName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            <TextView
+                    android:singleLine="true"
+                    android:maxEms="15"
+                    android:textAlignment="center"
+
+                    android:layout_margin="5dp"
+                    android:text="desc"
+                    android:id="@+id/itemUpdate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+
+
+    </LinearLayout>
+    </android.support.v7.widget.CardView>
+    <android.support.v7.widget.CardView
+            android:layout_weight="1"
+            android:id="@+id/indexCard2"
+            android:layout_width="0dp"
+            android:layout_margin="8dp"
+            app:cardElevation="10dp"
+            app:cardCornerRadius="5dp"
+            android:layout_height="wrap_content">
+
+
+        <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+            <ImageView
+                    android:id="@+id/itemImg2"
+                    android:maxHeight="150dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_menu_gallery"
+                    android:adjustViewBounds="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:textAlignment="center"
+                        android:layout_margin="5dp"
+                        android:maxEms="15"
+                        android:singleLine="true"
+
+
+                        android:id="@+id/itemName2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                <TextView
+                        android:textAlignment="center"
+                        android:maxEms="15"
+                        android:layout_margin="5dp"
+
+                        android:id="@+id/itemUpdate2"
+                        android:layout_width="match_parent"
+                        android:singleLine="true"
+                        android:layout_height="wrap_content"/>
+
+
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+
+</LinearLayout>

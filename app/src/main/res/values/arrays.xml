@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="playList">
+        <item>第1集</item>
+        <item>第2集</item>
+        <item>第3集</item>
+        <item>第4集</item>
+        <item>第5集</item>
+        <item>第6集</item>
+
+
+    </string-array>
+</resources>
