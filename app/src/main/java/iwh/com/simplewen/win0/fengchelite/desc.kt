@@ -12,6 +12,9 @@ import iwh.com.simplewen.win0.fengchelite.app.iwhToast
 import iwh.com.simplewen.win0.fengchelite.modal.PreData
 import kotlinx.android.synthetic.main.activity_desc.*
 
+/**
+ * 动漫详情页
+ */
 class desc : AppCompatActivity() {
     lateinit var itemDesc:String
     lateinit var itemImgUrl:String
@@ -23,7 +26,6 @@ class desc : AppCompatActivity() {
         //初始化toolbar
         supportActionBar!!.title = intent.getStringExtra("itemName")
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        supportActionBar!!.setDisplayShowHomeEnabled(true)
         intent.getStringExtra("itemId")?.let {
             //接收动漫的数据
             itemId = intent.getStringExtra("itemId")

@@ -1,4 +1,4 @@
-package iwh.com.simplewen.win0.fengchelite.view
+package iwh.com.simplewen.win0.fengchelite.adapter
 
 
 import android.content.Intent
@@ -10,11 +10,15 @@ import android.widget.*
 import com.bumptech.glide.Glide
 import iwh.com.simplewen.win0.fengchelite.R
 import iwh.com.simplewen.win0.fengchelite.app.App
-import iwh.com.simplewen.win0.fengchelite.app.iwhToast
 import iwh.com.simplewen.win0.fengchelite.desc
 
-
-class index_listview_adapter(val listData: ArrayList<Map<String, Any>>) : BaseAdapter() {
+/**
+ * 主页瀑布流双列表适配器
+ * @param listData 载入数据
+ *@author iwh
+ * @time 2019.02.04
+ */
+class DoubleListAdapter(val listData: ArrayList<Map<String, Any>>) : BaseAdapter() {
     /**
      * 启动动漫详情页
      * @param position 双列标志
@@ -67,7 +71,7 @@ class index_listview_adapter(val listData: ArrayList<Map<String, Any>>) : BaseAd
             Glide.with(App.getContext()).load(Uri.parse(listData[position * 2]["itemImg"].toString()))
                 .into(this.findViewById(R.id.itemImg))
             setOnClickListener {
-                this@index_listview_adapter.toOpenDesc(position, 1)
+                this@DoubleListAdapter.toOpenDesc(position, 1)
             }
         }
         //判断奇数最后一个隐藏
@@ -81,7 +85,7 @@ class index_listview_adapter(val listData: ArrayList<Map<String, Any>>) : BaseAd
                 Glide.with(App.getContext()).load(Uri.parse(listData[position * 2 + 1]["itemImg"].toString()))
                     .into(this.findViewById(R.id.itemImg2))
                 setOnClickListener {
-                    this@index_listview_adapter.toOpenDesc(position, 2)
+                    this@DoubleListAdapter.toOpenDesc(position, 2)
                 }
             }
         }

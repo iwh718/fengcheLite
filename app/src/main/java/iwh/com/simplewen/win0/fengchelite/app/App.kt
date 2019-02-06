@@ -8,7 +8,6 @@ class App :Application(){
     companion object {
 
         var  _context:Application? = null
-        var simpleAdapterData:ArrayList<ArrayList<Map<String, Any>>>? =null
         fun getContext():Context{
             return _context!!
         }

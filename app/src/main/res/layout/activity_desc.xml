@@ -24,23 +24,24 @@
                 app:toolbarId="@+id/toolbar"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 app:contentScrim="?attr/colorPrimary">
+            <ImageView
+                    android:id="@+id/descImg"
+                    android:src="@drawable/fc"
+                    android:scaleType="centerCrop"
+                    android:maxHeight="180dp"
+                    app:layout_collapseMode="parallax"
 
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
             <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_height="?attr/actionBarSize"
                     android:layout_width="match_parent"
                     app:layout_collapseMode="pin"
                     app:popupTheme="@style/AppTheme.PopupOverlay"/>
-            <ImageView
-                    android:id="@+id/descImg"
-                    android:src="@drawable/fc"
-                    android:scaleType="centerCrop"
-                    android:maxHeight="180dp"
-                    app:layout_scrollFlags="exitUntilCollapsed|scroll"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
 
         </android.support.design.widget.CollapsingToolbarLayout>
+
     </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/content_desc"/>

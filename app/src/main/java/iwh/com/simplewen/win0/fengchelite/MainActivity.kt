@@ -1,15 +1,12 @@
 package iwh.com.simplewen.win0.fengchelite
 
 import android.content.Intent
-import android.content.res.Resources
 import android.graphics.Color
-import android.graphics.drawable.Drawable
-import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
-import android.support.design.widget.Snackbar
+import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.NavigationView
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
@@ -20,14 +17,11 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.AdapterView
-import android.widget.MediaController
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.Resource
+import android.view.View
 import iwh.com.simplewen.win0.fengchelite.adapter.ViewPageAdapter
 import iwh.com.simplewen.win0.fengchelite.app.*
 import iwh.com.simplewen.win0.fengchelite.modal.PreData
-import iwh.com.simplewen.win0.fengchelite.net.netManage
+import iwh.com.simplewen.win0.fengchelite.net.NetManage
 import iwh.com.simplewen.win0.fengchelite.view.ViewPageFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
@@ -36,14 +30,21 @@ import kotlinx.android.synthetic.main.content_main.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, ViewPageFragment.CallBack {
 
+
     private lateinit var handler: Handler
-    private val netM = netManage()
+    private val netM = NetManage()
     //与Fragment通信
     override fun refresh(re:SwipeRefreshLayout) {
         super.refresh(re)
         netM.getIndex(handler)
 
     }
+
+
+
+
+
+    override var indexData: ArrayList<ArrayList<Map<String, Any>>>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,7 +56,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             for (i in 0..4) {
                 val ViewPageFragment = ViewPageFragment()
                 val Bundle = Bundle()
-                Bundle.putString("key", i.toString())
+                Bundle.putInt("key", i)
                 ViewPageFragment.arguments = Bundle
                 addNew(ViewPageFragment, this)
             }
@@ -64,9 +65,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val indexViewPgeAdapter = ViewPageAdapter(supportFragmentManager, viewPageFglists)
         indexViewPage.adapter = indexViewPgeAdapter
         indexViewPage.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) = Unit
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int)=Unit
             override fun onPageScrollStateChanged(state: Int) = Unit
             override fun onPageSelected(position: Int) {
+
                 indexTab.getTabAt(position)?.select()
             }
         })
@@ -75,7 +77,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             override fun handleMessage(msg: Message?) {
                 when (msg!!.what) {
                     0x110 -> {
-                        indexViewPage.adapter = indexViewPgeAdapter
+                        this@MainActivity.indexData = netM.itemsBox
+
                         indexViewPgeAdapter.notifyDataSetChanged()
 
                     }
@@ -85,8 +88,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
         //开始获取数据
         netM.getIndex(handler)
-
-
         //tab面板
         with(indexTab) {
             setTabTextColors(Color.WHITE,R.color.colorAccent)
@@ -131,11 +132,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)
         } else {
-            with(Intent()) {
+          /**  with(Intent()) {
                 action = Intent.ACTION_MAIN
                 addCategory(Intent.CATEGORY_HOME)
                 startActivity(this)
-            }
+            }**/
+            finish()
 
         }
     }
