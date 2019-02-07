@@ -15,9 +15,14 @@ import android.support.v4.view.ViewPager
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.SearchView
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.RotateAnimation
+import android.widget.ImageView
+import com.bumptech.glide.Glide
 import iwh.com.simplewen.win0.fengchelite.adapter.ViewPageAdapter
 import iwh.com.simplewen.win0.fengchelite.app.*
 import iwh.com.simplewen.win0.fengchelite.modal.PreData
@@ -27,31 +32,34 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
-
+/**
+ * 风车动漫第三方客户端
+ * @author IWH
+ * QQ：2868579699
+ * time：2019.02.04
+ */
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, ViewPageFragment.CallBack {
 
 
     private lateinit var handler: Handler
     private val netM = NetManage()
     //与Fragment通信
+    //刷新Fragment数据
     override fun refresh(re:SwipeRefreshLayout) {
         super.refresh(re)
         netM.getIndex(handler)
 
     }
-
-
-
-
-
+    //实现Fragment内部接口属性
     override var indexData: ArrayList<ArrayList<Map<String, Any>>>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-
-        //viewPageFragment
+        supportActionBar!!.setDisplayShowTitleEnabled(false)
+        iwhRotate(toolbar.findViewById<ImageView>(R.id.navIcon),3000)
+        //viewPageFragment集合
         val viewPageFglists: ArrayList<Fragment> = ArrayList<Fragment>().apply {
             for (i in 0..4) {
                 val ViewPageFragment = ViewPageFragment()
@@ -68,7 +76,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int)=Unit
             override fun onPageScrollStateChanged(state: Int) = Unit
             override fun onPageSelected(position: Int) {
-
+                //同步tab
                 indexTab.getTabAt(position)?.select()
             }
         })
@@ -78,7 +86,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 when (msg!!.what) {
                     0x110 -> {
                         this@MainActivity.indexData = netM.itemsBox
-
                         indexViewPgeAdapter.notifyDataSetChanged()
 
                     }
@@ -97,41 +104,31 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 addTab(this.newTab().setText(PreData.sortUrlArray[i]))
             }
         }
-
-
         //tab监听器
         indexTab.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
-
                 indexTab.getTabAt(tab.position)?.select()
                 indexViewPage.setCurrentItem(tab.position, true)
             }
-
             override fun onTabReselected(tab: TabLayout.Tab) {}
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
         })
-
-
+        //fab按钮
         fab.setOnClickListener { view ->
 
-
         }
-
         val toggle = ActionBarDrawerToggle(
-            this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
-        )
+            this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
         nav_view.setNavigationItemSelectedListener(this)
-
-       // toolbar.navigationIcon =
-        //Glide.with(this@MainActivity).load(R.drawable.fc).into(toolbar.navigationIcon)
     }
 
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)
         } else {
+            //返回桌面
           /**  with(Intent()) {
                 action = Intent.ACTION_MAIN
                 addCategory(Intent.CATEGORY_HOME)
@@ -143,24 +140,27 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-
         menuInflater.inflate(R.menu.main, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
         when (item.itemId) {
-            R.id.action_settings -> return true
+            R.id.action_settings -> {
+
+            }
+            R.id.action_search -> {
+                startActivity(Intent(this@MainActivity,Search::class.java))
+            }
             else -> return super.onOptionsItemSelected(item)
         }
+        return true
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        // Handle navigation view item clicks here.
         when (item.itemId) {
             R.id.nav_camera -> {
-                // Handle the camera action
+
             }
             R.id.nav_gallery -> {
 

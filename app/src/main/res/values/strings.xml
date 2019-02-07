@@ -2,10 +2,14 @@
     <string name="app_name">风车动漫.it</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_title">风车动漫.it | 2019.02.04 V1.0</string>
+    <string name="nav_header_subtitle">反馈：630020826@qq.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_desc">desc</string>
+
+    <string name="title_activity_play">Play</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 
 </resources>

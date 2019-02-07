@@ -14,16 +14,23 @@
                   android:orientation="vertical"
                   android:layout_height="match_parent">
 
-        <android.support.v7.widget.CardView
+        <android.support.v4.widget.ContentLoadingProgressBar
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            <TextView
-                    android:id="@+id/descText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/text_margin"
-                    android:text="动漫简介"/>
-        </android.support.v7.widget.CardView>
+                android:id="@+id/descLoad"
+                style="@style/Base.Widget.AppCompat.ProgressBar"
+                android:layout_height="wrap_content"/>
+            <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <TextView
+                        android:id="@+id/descText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/text_margin"
+                        android:text="动漫简介"/>
+            </android.support.v7.widget.CardView>
+
+
         <android.support.v7.widget.CardView
                 android:layout_margin="5dp"
                 app:cardCornerRadius="10dp"
@@ -33,7 +40,6 @@
                 android:layout_height="match_parent">
             <iwh.com.simplewen.win0.fengchelite.view.PlayList
                     android:id="@+id/playListView"
-                    android:entries="@array/playList"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 

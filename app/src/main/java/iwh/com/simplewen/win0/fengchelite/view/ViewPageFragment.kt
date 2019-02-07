@@ -45,7 +45,7 @@ class ViewPageFragment : Fragment() {
         val key = arguments!!.getInt("key")
         val indexListFgList = indexLy.findViewById<ListView>(R.id.indexFgListview)
         indexRefresh = indexLy.findViewById(R.id.indexRefresh)
-
+        indexRefresh!!.setColorSchemeResources(R.color.colorAccent,R.color.colorPrimary)
         indexRefresh!!.setOnRefreshListener {
             _context!!.refresh(indexRefresh!!)
         }
@@ -67,10 +67,11 @@ class ViewPageFragment : Fragment() {
         })
 
         indexListFgList.divider = null
+        //初始化为空，等待数据返回刷新
         _context!!.indexData?.let {
             indexListFgList.adapter = DoubleListAdapter(it[key])
         }
-
+        //刷新完成，关闭
         _context!!.stopRefresh(indexRefresh!!)
         return indexLy
     }

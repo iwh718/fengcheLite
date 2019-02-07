@@ -7,14 +7,15 @@ import android.net.Uri
 import android.os.Handler
 import android.os.Message
 import android.support.v4.app.Fragment
-
 import android.view.Gravity
+import android.view.View
+import android.view.animation.Animation
+import android.view.animation.RotateAnimation
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import iwh.com.simplewen.win0.fengchelite.R
-
-import java.util.*
+import kotlin.collections.ArrayList
 
 
 /**顶级函数
@@ -93,6 +94,19 @@ fun sendHandler(msgWhat:Int,handler: Handler){
             handler.sendMessage(this)
         }
 }
+
+
+/**
+ * 旋转动画
+ */
+fun iwhRotate(view: View,duration:Long = 1000){
+    val Ani = RotateAnimation(0f,359f, Animation.RELATIVE_TO_SELF,0.5f, Animation.RELATIVE_TO_SELF,0.5f)
+    Ani.repeatCount = -1
+    Ani.duration = duration
+    view.startAnimation(Ani)
+}
+
+
 /**数据操作类
 @author:iwh
 @time:2019.01.10
@@ -100,7 +114,7 @@ fun sendHandler(msgWhat:Int,handler: Handler){
 class iwhDataOperator {
 
     companion object {
-        /**操作SharePreferences
+        /**操作SharePreferences基本数据
          * @param saveKey 存储键
          * @param saveText 存储数据
          * @param shpName 指定文件
@@ -118,7 +132,9 @@ class iwhDataOperator {
                 is String -> {
                     SHP_Text.edit().putString(saveKey, saveText).apply()
                 }
+
                 else -> {
+
                     throw Throwable("类型不匹配！")
                 }
 

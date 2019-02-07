@@ -21,14 +21,18 @@ import kotlin.concurrent.thread
 class NetManage {
 
     private val client = OkHttpClient.Builder().build() //初始化请求
-
+    //首页数据
     var itemsBox = ArrayList<ArrayList<Map<String,Any>>>()
+    var currentPlayUrl = ""
+    var itemsArray = ArrayList<Map<String,Any>>()
+    //播放列表adapter数据
+    var playInfo = ArrayList<String>()
+
     /**
      * 获取首页数据
      * @param hand 线程handler
      */
     fun getIndex(hand: Handler) {
-        var res = ""
         itemsBox.clear()
         thread {
 
@@ -60,17 +64,11 @@ class NetManage {
                                 put("itemUpdate", itemUpdate)
                                 put("itemId", itemId)
                             }
-
                             simpleAdapter_data.add(temMap)
-
                         }
                         //打包一个分类
                         itemsBox.add(simpleAdapter_data)
-                        Log.d("@@itemboxAdd:","${itemsBox}")
                     }
-                    Log.d("@@itemboxSize:","${itemsBox.size}")
-
-
                     sendHandler(0x110, hand)
                 }
                 override fun onFailure(call: Call, e: IOException) {
@@ -93,15 +91,63 @@ class NetManage {
 
     }
     /**
-     * 获取详情
+     *播放解析
+     * @param playId 播放链接
+     * @return 拼接
      */
-    fun getDesc(){
+    fun getPlay(handler:Handler,playId:String){
+        val vUrl = "${ PreData.baseUrl}/v/$playId.html"
+        Log.d("@@@@",vUrl)
+        thread {
+            this.client.newCall(Request.Builder().url(vUrl).build()).enqueue(object :Callback{
+                override fun onResponse(call: Call, response: Response) {
+                    val resText = response.body()?.string()
+                    val temText = resText
+                    val doc = Jsoup.parse(temText)
+                     this@NetManage.currentPlayUrl  = "${PreData.playBaseUrl}${doc.select(".play .area .bofang div").get(0).attr("data-vid")}"
+                    Log.d("@@attr-vid:","")
+                    Log.d("@@playUrl:","${PreData.playBaseUrl}${this@NetManage.currentPlayUrl}")
+                    sendHandler(0x115,handler)
+
+                }
+
+                override fun onFailure(call: Call, e: IOException){
+                    sendHandler(0x113,handler)
+                }
+            })
+        }
 
     }
     /**
-     * 播放解析
+     *  获取详情
+     * @param descUrl 详情页链接
      */
-    fun getPlay(){
+    fun getDesc(descUrl:String,handler: Handler){
+           playInfo.clear()
+        thread {
+            val request = Request.Builder().url(descUrl).build()
+            this.client.newCall(request).enqueue(object :Callback{
+                override fun onFailure(call: Call, e: IOException) {
+                    sendHandler(0x113,handler)
+                }
 
+                override fun onResponse(call: Call, response: Response) {
+                    val resText = response.body()?.string()
+                    val temResText: String? = resText
+                    val doc = Jsoup.parse(temResText)
+                    //动漫简介
+
+                    val itemInfo = doc.select(".fire .info").html()
+                    //动漫集数
+                    val itemPlays = doc.select(".fire .tabs .movurl li")
+                    playInfo.add(itemInfo)
+                    playInfo.add(itemPlays.size.toString())
+                   // Log.d("@@@","$playInfo")
+                    sendHandler(0x114,handler)
+
+                }
+            })
+
+        }
     }
 }
