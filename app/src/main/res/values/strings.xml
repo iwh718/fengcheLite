@@ -3,7 +3,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">风车动漫.it | 2019.02.04 V1.0</string>
-    <string name="nav_header_subtitle">反馈：630020826@qq.com</string>
+    <string name="nav_header_subtitle">反馈QQ群：943543759</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_desc">desc</string>
@@ -11,5 +11,15 @@
     <string name="title_activity_play">Play</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="draw_menu_like">我的收藏</string>
+    <string name="draw_menu_about">关于应用</string>
+    <string name="draw_menu_update">检测更新</string>
+    <string name="draw_menu_history">观看历史</string>
+    <string name="draw_menu_share">分享</string>
+    <string name="actionu_theme">换个颜色</string>
+    <string name="action_menu_like">好评</string>
+    <string name="author_iwh">IWH</string>
+    <string name="draw_menu_sort">最新榜单</string>
+
 
 </resources>

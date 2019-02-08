@@ -7,6 +7,7 @@ class  PreData{
         //基础Url
         val baseUrl = "http://www.dmzjc.com"
         val playBaseUrl = "http://txup.075869.com/?vid="
+        val searchUrl = "http://www.dmzjc.com/search/"
         /**
          * 填充Url
          * @param pageUrl 页面相对路径

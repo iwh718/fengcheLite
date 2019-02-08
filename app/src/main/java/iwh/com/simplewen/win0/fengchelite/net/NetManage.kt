@@ -1,6 +1,8 @@
 package iwh.com.simplewen.win0.fengchelite.net
 
 import android.os.Handler
+import android.os.Looper
+import android.os.Message
 import android.sax.Element
 import android.util.Log
 import iwh.com.simplewen.win0.fengchelite.app.App
@@ -22,9 +24,9 @@ class NetManage {
 
     private val client = OkHttpClient.Builder().build() //初始化请求
     //首页数据
-    var itemsBox = ArrayList<ArrayList<Map<String,Any>>>()
+    var itemsBox = ArrayList<ArrayList<Map<String, Any>>>()
     var currentPlayUrl = ""
-    var itemsArray = ArrayList<Map<String,Any>>()
+    var itemsArray = ArrayList<Map<String, Any>>()
     //播放列表adapter数据
     var playInfo = ArrayList<String>()
 
@@ -71,6 +73,7 @@ class NetManage {
                     }
                     sendHandler(0x110, hand)
                 }
+
                 override fun onFailure(call: Call, e: IOException) {
                     sendHandler(0x111, hand)
                 }
@@ -81,54 +84,91 @@ class NetManage {
     /**
      * 获取排行榜
      */
-    fun getSort(handler:Handler){
+    fun getSort(handler: Handler) {
 
     }
+
     /**
      * 搜索
+     * @param searchText 搜索名
      */
-    fun getSearch(){
+    fun getSearch(handler: Handler, searchText: String) {
+        itemsArray.clear()
+        thread {
+            //Looper.prepare()
+            //Log.d("@@searchUrl:","${PreData.searchUrl}${searchText}")
+            this.client.newCall(Request.Builder().url("${PreData.searchUrl}$searchText").build())
+                .enqueue(object : Callback {
+                    override fun onFailure(call: Call, e: IOException) {
+                        sendHandler(0x117,handler)
 
+                    }
+
+                    override fun onResponse(call: Call, response: Response) {
+                        val resText = response.body()?.string()
+                        val temText = resText
+                        val doc = Jsoup.parse(temText)
+                        val searchList = doc.select(".lpic ul li")
+
+                        //Log.d("@@@i:","${doc.select(".lpic ul li")}")
+                        for (i in searchList) {
+                            val temMap = LinkedHashMap<String, Any>().apply {
+                                put("name", i.select("h2 a").attr("title"))
+                                put("url", i.select("h2 a").attr("href"))
+                                put("imgUrl",i.select("a img").attr("src"))
+                            }
+                            //Log.d("@@temMap:",temMap.toString())
+                            this@NetManage.itemsArray.add(temMap)
+                            sendHandler(0x116, handler)
+                            // Log.d("@@@:search:",i.attr("href"))
+                             Log.d("@@@search:title",i.attr("title"))
+                        }
+                    }
+                })
+        }
     }
+
     /**
      *播放解析
      * @param playId 播放链接
      * @return 拼接
      */
-    fun getPlay(handler:Handler,playId:String){
-        val vUrl = "${ PreData.baseUrl}/v/$playId.html"
-        Log.d("@@@@",vUrl)
+    fun getPlay(handler: Handler, playId: String) {
+        val vUrl = "${PreData.baseUrl}/v/$playId.html"
+        Log.d("@@@@", vUrl)
         thread {
-            this.client.newCall(Request.Builder().url(vUrl).build()).enqueue(object :Callback{
+            this.client.newCall(Request.Builder().url(vUrl).build()).enqueue(object : Callback {
                 override fun onResponse(call: Call, response: Response) {
                     val resText = response.body()?.string()
                     val temText = resText
                     val doc = Jsoup.parse(temText)
-                     this@NetManage.currentPlayUrl  = "${PreData.playBaseUrl}${doc.select(".play .area .bofang div").get(0).attr("data-vid")}"
-                    Log.d("@@attr-vid:","")
-                    Log.d("@@playUrl:","${PreData.playBaseUrl}${this@NetManage.currentPlayUrl}")
-                    sendHandler(0x115,handler)
+                    this@NetManage.currentPlayUrl =
+                            "${PreData.playBaseUrl}${doc.select(".play .area .bofang div").get(0).attr("data-vid")}"
+                    Log.d("@@attr-vid:", "")
+                    Log.d("@@playUrl:", "${PreData.playBaseUrl}${this@NetManage.currentPlayUrl}")
+                    sendHandler(0x115, handler)
 
                 }
 
-                override fun onFailure(call: Call, e: IOException){
-                    sendHandler(0x113,handler)
+                override fun onFailure(call: Call, e: IOException) {
+                    sendHandler(0x113, handler)
                 }
             })
         }
 
     }
+
     /**
      *  获取详情
      * @param descUrl 详情页链接
      */
-    fun getDesc(descUrl:String,handler: Handler){
-           playInfo.clear()
+    fun getDesc(descUrl: String, handler: Handler) {
+        playInfo.clear()
         thread {
             val request = Request.Builder().url(descUrl).build()
-            this.client.newCall(request).enqueue(object :Callback{
+            this.client.newCall(request).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
-                    sendHandler(0x113,handler)
+                    sendHandler(0x113, handler)
                 }
 
                 override fun onResponse(call: Call, response: Response) {
@@ -142,8 +182,8 @@ class NetManage {
                     val itemPlays = doc.select(".fire .tabs .movurl li")
                     playInfo.add(itemInfo)
                     playInfo.add(itemPlays.size.toString())
-                   // Log.d("@@@","$playInfo")
-                    sendHandler(0x114,handler)
+                    // Log.d("@@@","$playInfo")
+                    sendHandler(0x114, handler)
 
                 }
             })
