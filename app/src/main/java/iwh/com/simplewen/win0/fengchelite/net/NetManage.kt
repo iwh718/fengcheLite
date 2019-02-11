@@ -12,6 +12,7 @@ import iwh.com.simplewen.win0.fengchelite.modal.PreData
 import okhttp3.*
 import org.jsoup.Jsoup
 import java.io.IOException
+import java.util.concurrent.Callable
 import kotlin.concurrent.thread
 
 /**
@@ -26,7 +27,7 @@ class NetManage {
     //首页数据
     var itemsBox = ArrayList<ArrayList<Map<String, Any>>>()
     var currentPlayUrl = ""
-    var itemsArray = ArrayList<Map<String, Any>>()
+    var itemsArray: ArrayList<Map<String, Any>?> = ArrayList<Map<String, Any>?>()
     //播放列表adapter数据
     var playInfo = ArrayList<String>()
 
@@ -95,15 +96,12 @@ class NetManage {
     fun getSearch(handler: Handler, searchText: String) {
         itemsArray.clear()
         thread {
-            //Looper.prepare()
-            //Log.d("@@searchUrl:","${PreData.searchUrl}${searchText}")
             this.client.newCall(Request.Builder().url("${PreData.searchUrl}$searchText").build())
                 .enqueue(object : Callback {
                     override fun onFailure(call: Call, e: IOException) {
-                        sendHandler(0x117,handler)
+                        sendHandler(PreData.API_FLAG_ERROR, handler)
 
                     }
-
                     override fun onResponse(call: Call, response: Response) {
                         val resText = response.body()?.string()
                         val temText = resText
@@ -115,13 +113,13 @@ class NetManage {
                             val temMap = LinkedHashMap<String, Any>().apply {
                                 put("name", i.select("h2 a").attr("title"))
                                 put("url", i.select("h2 a").attr("href"))
-                                put("imgUrl",i.select("a img").attr("src"))
+                                put("imgUrl", i.select("a img").attr("src"))
                             }
                             //Log.d("@@temMap:",temMap.toString())
                             this@NetManage.itemsArray.add(temMap)
-                            sendHandler(0x116, handler)
+                            sendHandler(PreData.API_FLAG_OK, handler)
                             // Log.d("@@@:search:",i.attr("href"))
-                             Log.d("@@@search:title",i.attr("title"))
+                            Log.d("@@@search:title", i.attr("title"))
                         }
                     }
                 })
@@ -129,25 +127,71 @@ class NetManage {
     }
 
     /**
+     * 拼接M3U8链接，适配部分平台接口
+     * @param playUrl 原始链接
+     * @return 返回拼接url
+     */
+    private fun joinM3u8(playUrl: String): String? {
+        var m3u8Url: String? = null
+          val response =  this@NetManage.client.newCall(Request.Builder().url(playUrl).build()).execute()
+            if(response.isSuccessful) {
+                val regexFindUrl = Regex("main[\\s\\S]*?;")
+                val result = response.body()?.string()
+                regexFindUrl.find(result.toString())?.let {
+                    m3u8Url = it.value.replace(Regex("[\"\\s;]"), "").replace("main=", "")
+                    /** 获取加密m3u8文件
+                     *  val getFinalUrl = this@NetManage.client.newCall(Request.Builder().url("${PreData.url_tcpspc}$m3u8Url").build())
+                    .execute()
+                    val finalRes = getFinalUrl.body()?.string()
+                    m3u8Url = Regex("/ppvod/.*?m3u8\$").find(finalRes.toString())?.value
+
+                    }**/
+
+                }
+            }
+        return m3u8Url
+
+    }
+
+
+    /**
      *播放解析
      * @param playId 播放链接
-     * @return 拼接
+     * @return 播放链接
      */
     fun getPlay(handler: Handler, playId: String) {
         val vUrl = "${PreData.baseUrl}/v/$playId.html"
-        Log.d("@@@@", vUrl)
+        //Log.d("@@@@", vUrl)
         thread {
             this.client.newCall(Request.Builder().url(vUrl).build()).enqueue(object : Callback {
                 override fun onResponse(call: Call, response: Response) {
                     val resText = response.body()?.string()
                     val temText = resText
                     val doc = Jsoup.parse(temText)
-                    this@NetManage.currentPlayUrl =
-                            "${PreData.playBaseUrl}${doc.select(".play .area .bofang div").get(0).attr("data-vid")}"
-                    Log.d("@@attr-vid:", "")
-                    Log.d("@@playUrl:", "${PreData.playBaseUrl}${this@NetManage.currentPlayUrl}")
-                    sendHandler(0x115, handler)
+                    val playUrl = doc.select(".play .area .bofang div")?.get(0)!!.attr("data-vid").replace("\$mp4", "").replace("\$url","")
+                    Log.d("@@res_playUrl:", playUrl)
+                    if (playUrl.contains(Regex(".*?744zy.*?")) ) {
+                        //检测www.744zy.com接口
+                        val msUrl = "${PreData.url_744zy}${this@NetManage.joinM3u8(playUrl)}\$url"
+                        if (msUrl.isEmpty()) {
+                            Log.d("@@@error", "接口获取失败")
+                        } else {
+                            this@NetManage.currentPlayUrl = msUrl
+                            sendHandler(0x115, handler)
+                        }
 
+                    } else if(playUrl.contains(Regex(".*?tcpspc.*?")) ){
+                        //检测tcpspc加密接口，使用webview播放
+                        //接口加密了。。。暂时使用web播放
+                       this@NetManage.currentPlayUrl =  playUrl
+                        sendHandler(0x115, handler)
+
+                    }else{
+                        //正常处理，使用原生videoView播放
+                        this@NetManage.currentPlayUrl = playUrl
+                        sendHandler(0x115, handler)
+                        Log.d("@@@zc:","正常接口")
+                    }
                 }
 
                 override fun onFailure(call: Call, e: IOException) {
@@ -170,13 +214,11 @@ class NetManage {
                 override fun onFailure(call: Call, e: IOException) {
                     sendHandler(0x113, handler)
                 }
-
                 override fun onResponse(call: Call, response: Response) {
                     val resText = response.body()?.string()
                     val temResText: String? = resText
                     val doc = Jsoup.parse(temResText)
                     //动漫简介
-
                     val itemInfo = doc.select(".fire .info").html()
                     //动漫集数
                     val itemPlays = doc.select(".fire .tabs .movurl li")
@@ -184,7 +226,6 @@ class NetManage {
                     playInfo.add(itemPlays.size.toString())
                     // Log.d("@@@","$playInfo")
                     sendHandler(0x114, handler)
-
                 }
             })
 

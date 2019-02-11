@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".activity.WebViewPlay">
+    <WebView android:layout_width="match_parent" android:layout_height="match_parent"
+             android:id="@+id/playWebView">
+
+    </WebView>
+    <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fabSize="mini"
+            android:alpha=".5"
+            android:scaleType="center"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_margin="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/webViewFab"
+            android:backgroundTint="#fff"
+            app:srcCompat="@drawable/fab_fullplay"
+    />
+</android.support.constraint.ConstraintLayout>

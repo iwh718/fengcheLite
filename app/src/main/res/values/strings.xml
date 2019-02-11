@@ -15,11 +15,16 @@
     <string name="draw_menu_about">关于应用</string>
     <string name="draw_menu_update">检测更新</string>
     <string name="draw_menu_history">观看历史</string>
-    <string name="draw_menu_share">分享</string>
+    <string name="draw_menu_share">分享应用</string>
     <string name="actionu_theme">换个颜色</string>
     <string name="action_menu_like">好评</string>
-    <string name="author_iwh">IWH</string>
+    <string name="author_iwh">by：IWH | 19.02.04 | v1.0</string>
     <string name="draw_menu_sort">最新榜单</string>
-
+    <string name="about_author">IWH</string>
+    <string name="about_github">GitHub：xxxx</string>
+    <string name="about_desc">简介：这是一个风车动漫爬虫，同步于风车web端，仅仅是一个小工具，由于风车动漫不提供直接播放源，所有视频都是通过接口解析而来，部分接口加密的资源采用webView播放。应用播放内容取决于风车的状态！\n\n
+    所以：可能会有些内容，即时采用的webView也无法播放（比如：神奇宝贝，前面几集），部分动漫，前后采用了多种接口播放，可能会因为没有适配，播放不出来，请打开web端观看！</string>
+    <string name="about_qq">应用使用Kotlin开发，请实验性使用部分功能 \n\n(仅提供反馈，不提供资源！):943543759</string>
+    <string name="about_thanks">警告：本应用不提供下载，全部内容依靠风车动漫web端内容解析而来。</string>
 
 </resources>

@@ -10,7 +10,7 @@ import android.widget.*
 import com.bumptech.glide.Glide
 import iwh.com.simplewen.win0.fengchelite.R
 import iwh.com.simplewen.win0.fengchelite.app.App
-import iwh.com.simplewen.win0.fengchelite.desc
+import iwh.com.simplewen.win0.fengchelite.activity.desc
 
 /**
  * 主页瀑布流双列表适配器

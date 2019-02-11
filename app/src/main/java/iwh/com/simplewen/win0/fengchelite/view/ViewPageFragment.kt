@@ -1,23 +1,15 @@
 package iwh.com.simplewen.win0.fengchelite.view
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import iwh.com.simplewen.win0.fengchelite.MainActivity
 import iwh.com.simplewen.win0.fengchelite.R
 import iwh.com.simplewen.win0.fengchelite.adapter.DoubleListAdapter
-
-import iwh.com.simplewen.win0.fengchelite.app.App
-import iwh.com.simplewen.win0.fengchelite.app.iwhToast
-import iwh.com.simplewen.win0.fengchelite.desc
 
 
 class ViewPageFragment : Fragment() {

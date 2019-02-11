@@ -7,13 +7,14 @@
     <application
             android:name=".app.App"
             android:allowBackup="true"
-            android:icon="@drawable/big_logo"
+            android:anyDensity="false"
+            android:icon="@drawable/logo"
             android:label="@string/app_name"
-            android:roundIcon="@drawable/big_logo"
+            android:roundIcon="@drawable/logo_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity
-                android:name=".MainActivity"
+                android:name=".activity.MainActivity"
                 android:label="@string/app_name"
                 android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -24,21 +25,31 @@
             </intent-filter>
         </activity>
         <activity
-                android:name=".desc"
+                android:name=".activity.desc"
                 android:label="@string/title_activity_desc"
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-                android:name=".Search"
+                android:name=".activity.Search"
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-                android:name=".Play"
+                android:name=".activity.Play"
+                android:configChanges="orientation|keyboardHidden|screenSize"
+                android:hardwareAccelerated="true"
+                android:label="@string/title_activity_play"
+                android:screenOrientation="landscape"
+                android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+                android:name=".activity.WebViewPlay"
+                android:configChanges="orientation|keyboardHidden|screenSize"
                 android:hardwareAccelerated="true"
                 android:screenOrientation="landscape"
-                android:configChanges="orientation|keyboardHidden|screenSize"
-                android:label="@string/title_activity_play"
-                android:theme="@style/FullscreenTheme">
+                android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity android:name=".activity.about"
+             >
         </activity>
     </application>
 

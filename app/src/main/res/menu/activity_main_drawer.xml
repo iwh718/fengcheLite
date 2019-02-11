@@ -9,28 +9,30 @@
             android:icon="@drawable/fab_like"
             android:title="@string/draw_menu_like" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_action_search"
+            android:id="@+id/nav_history"
+            android:icon="@drawable/nav_history"
             android:title="@string/draw_menu_history" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:id="@+id/nav_sort"
+            android:icon="@drawable/nav_sort"
             android:title="@string/draw_menu_sort" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="其它">
         <menu>
+
             <item
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_menu_share"
                 android:title="@string/draw_menu_share" />
             <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
+                    android:id="@+id/nav_about"
+                    android:icon="@drawable/nav_about"
+                    android:title="@string/draw_menu_about" />
+            <item
+                android:id="@+id/nav_update"
+                android:icon="@drawable/nav_update"
                 android:title="@string/draw_menu_update" />
         </menu>
     </item>

@@ -7,10 +7,10 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import iwh.com.simplewen.win0.fengchelite.app.App
 
-class SearchListAdapter(val searchList:ArrayList<Map<String,Any>>):BaseAdapter(){
+class SearchListAdapter(val searchList:ArrayList<Map<String,Any>?>):BaseAdapter(){
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         return  TextView(App.getContext()).apply {
-                text = searchList[position]["name"].toString()
+                text = searchList[position]?.get("name").toString()
                // textAlignment = View.TEXT_ALIGNMENT_CENTER
                 setPadding(10,10,10,10)
                 layoutParams = ViewGroup.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
