@@ -86,7 +86,32 @@ class NetManage {
      * 获取排行榜
      */
     fun getSort(handler: Handler) {
+            itemsArray.clear()
+        thread {
+            this.client.newCall(Request.Builder().url(PreData.sortUrl).build())
+                .enqueue(object :Callback{
+                    override fun onResponse(call: Call, response: Response) {
+                        val resText = response.body()?.string()
+                        val doc = Jsoup.parse(resText)
+                        val sortList = doc.select(".area .topli ul li")
+                        //取出排行榜数据
+                        for (i in sortList) {
+                            val temMap = LinkedHashMap<String, Any>().apply {
+                                put("itemName", i.select("a").text())
+                                put("itemId", i.select("a").attr("href"))
 
+                            }
+                            this@NetManage.itemsArray.add(temMap)
+                        }
+                        Log.d("@@sort:",this@NetManage.itemsArray.toString())
+                        sendHandler(PreData.API_FLAG_OK, handler)
+                    }
+
+                    override fun onFailure(call: Call, e: IOException) {
+                        sendHandler(PreData.API_FLAG_ERROR, handler)
+                    }
+                })
+        }
     }
 
     /**
@@ -108,19 +133,15 @@ class NetManage {
                         val doc = Jsoup.parse(temText)
                         val searchList = doc.select(".lpic ul li")
 
-                        //Log.d("@@@i:","${doc.select(".lpic ul li")}")
                         for (i in searchList) {
                             val temMap = LinkedHashMap<String, Any>().apply {
-                                put("name", i.select("h2 a").attr("title"))
-                                put("url", i.select("h2 a").attr("href"))
-                                put("imgUrl", i.select("a img").attr("src"))
+                                put("itemName", i.select("h2 a").attr("title"))
+                                put("itemId", i.select("h2 a").attr("href"))
+                                put("itemImg", i.select("a img").attr("src"))
                             }
-                            //Log.d("@@temMap:",temMap.toString())
                             this@NetManage.itemsArray.add(temMap)
-                            sendHandler(PreData.API_FLAG_OK, handler)
-                            // Log.d("@@@:search:",i.attr("href"))
-                            Log.d("@@@search:title", i.attr("title"))
                         }
+                        sendHandler(PreData.API_FLAG_OK, handler)
                     }
                 })
         }

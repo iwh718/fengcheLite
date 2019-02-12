@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Handler
 import android.os.Message
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.animation.Animation
@@ -15,6 +16,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import iwh.com.simplewen.win0.fengchelite.R
+import iwh.com.simplewen.win0.fengchelite.activity.desc
 import kotlin.collections.ArrayList
 
 
@@ -107,6 +109,72 @@ fun iwhRotate(view: View,duration:Long = 1000){
 }
 
 
+/**
+ * 收藏动漫
+ * @param itemId 数组下标
+ * @param itemName 动漫名字
+ * @param splitList 设置list分割符号
+ * @param splitMap 设置map分割符号
+ */
+
+fun saveDM(itemName:String,itemId:String,splitList:String = "@@",splitMap:String=">"):Boolean{
+    val likeList = iwhDataOperator.getSHP("likeKey","like","")
+    if(!likeList.matches(Regex(".*?${itemName}.*?"))){
+        iwhDataOperator.setSHP("likeKey","$likeList$splitList$itemName$splitMap$itemId","like")
+       // Log.d("@@setSHP:","${likeList}@@${itemName}>$itemId")
+        //测试 getSaveDM()
+        return true
+    }else{
+        return false
+    }
+
+
+
+}
+/**
+ * 获取收藏
+ * @return 返回收藏列表
+ */
+fun getSaveDM():ArrayList<Map<String,Any>?>{
+    val likes:ArrayList<Map<String,Any>?> = ArrayList<Map<String,Any>?>()
+    val likeList = iwhDataOperator.getSHP("likeKey","like","")
+    if(likeList.isNotEmpty()){
+        //匹配动漫
+       val l = Regex("@@.*?.html").findAll(likeList)
+        for (i in l){
+            //获取名
+            val l_name = Regex("@@.*?>").find(i.value)?.value?.replace(Regex("[@>]"),"").toString()
+            //获取播放链接
+            val l_id = Regex(">.*?.html").find(i.value)?.value?.replace(">","").toString()
+            //放入MAP
+            val temMap = linkedMapOf<String,Any>().apply {
+                put("itemName",l_name)
+                put("itemId",l_id)
+            }
+            //放入list
+            likes.add(temMap)
+
+        }
+        Log.d("@@getLikes:",likes.toString())
+        return likes
+    }
+    Log.d("@@getlikesERROR:","获取收藏失败！")
+    return likes
+}
+
+/**
+ * 跳转详情页
+ * @param data 传入数据
+ * @param pos 下标
+ */
+fun toDesc(data:ArrayList<Map<String,Any>?>,pos:Int){
+    with(Intent(App.getContext(), desc::class.java)) {
+        putExtra("itemId",data[pos]!!["itemId"].toString())
+        putExtra("itemName", data[pos]!!["itemName"].toString())
+        App.getContext().startActivity(this)
+    }
+}
+
 /**数据操作类
 @author:iwh
 @time:2019.01.10
@@ -156,7 +224,7 @@ class iwhDataOperator {
                 }
                 //返回字符型数据
                 is String -> {
-                    return SHP_Text.getString(getKey, "0") as T
+                    return SHP_Text.getString(getKey, "") as T
                 }
                 //返回布尔值数据
                 is Boolean -> {

@@ -18,7 +18,7 @@
             android:scaleType="center"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_margin="30dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             android:id="@+id/webViewFab"
             android:backgroundTint="#fff"
             app:srcCompat="@drawable/fab_fullplay"

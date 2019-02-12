@@ -17,6 +17,8 @@ class  PreData{
         val baseUrl = "http://www.dmzjc.com"
         //搜索url
         val searchUrl = "http://www.dmzjc.com/search/"
+        //排行Url
+        val sortUrl = "http://www.dmzjc.com/top/"
         //适配的接口
         val url_744zy = "https://www.744zy.com"
         val url_tcpspc = " https://xin.tcpspc.com"

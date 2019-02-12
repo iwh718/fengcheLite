@@ -10,7 +10,7 @@
 
     <ScrollView android:layout_width="match_parent" android:layout_height="wrap_content">
 
-    </ScrollView>
+
         <android.support.v7.widget.CardView android:layout_width="match_parent"
                                             android:layout_margin="10dp"
                                             android:elevation="6dp"
@@ -46,12 +46,15 @@
                           android:text="@string/about_desc"
                           android:layout_height="wrap_content"/>
                 <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                          android:layout_margin="10dp"
+                android:text="@string/updesc"/>
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
                           android:textColor="#ab0000"
                 android:text="@string/about_thanks"/>
             </LinearLayout>
 
         </android.support.v7.widget.CardView>
-
+    </ScrollView>
 
 
 </LinearLayout>

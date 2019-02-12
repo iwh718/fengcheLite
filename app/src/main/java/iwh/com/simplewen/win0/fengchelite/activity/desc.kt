@@ -16,6 +16,7 @@ import iwh.com.simplewen.win0.fengchelite.R
 import iwh.com.simplewen.win0.fengchelite.adapter.PlayListViewAdapter
 import iwh.com.simplewen.win0.fengchelite.app.iwhDataOperator
 import iwh.com.simplewen.win0.fengchelite.app.iwhToast
+import iwh.com.simplewen.win0.fengchelite.app.saveDM
 import iwh.com.simplewen.win0.fengchelite.modal.PreData
 import iwh.com.simplewen.win0.fengchelite.net.NetManage
 import kotlinx.android.synthetic.main.activity_desc.*
@@ -26,10 +27,12 @@ import kotlinx.android.synthetic.main.content_desc.*
  * 动漫详情页
  */
 class desc : AppCompatActivity() {
-    lateinit var itemDesc: String
+    //封面图片
     lateinit var itemImgUrl: String
+    //播放链接
     lateinit var itemId: String
     lateinit var handler: Handler
+    //实例化网络操作对象
     lateinit var netM: NetManage
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,7 +77,7 @@ class desc : AppCompatActivity() {
         intent.getStringExtra("itemId")?.let {
             //接收动漫的数据
             itemId = intent.getStringExtra("itemId")
-            itemImgUrl = intent.getStringExtra("itemImg")
+            itemImgUrl = intent.getStringExtra("itemImg")?:""
             //加载封面
             Glide.with(this@desc).load(itemImgUrl).into(descImg)
             netM.getDesc(PreData.router(itemId), handler)
@@ -82,8 +85,12 @@ class desc : AppCompatActivity() {
         }
         //收藏
         fab.setOnClickListener {
-            iwhDataOperator.setSHP(PreData.router(itemId),intent.getStringExtra("itemName"),"iwhLike")
-            iwhToast("收藏完成！")
+           // iwhDataOperator.setSHP(PreData.router(itemId),intent.getStringExtra("itemName"),"iwhLike")
+            if(saveDM(intent.getStringExtra("itemName"),intent.getStringExtra("itemId"))){
+                iwhToast("收藏完成！")
+            }else{
+                iwhToast("您已收藏过！")
+            }
 
         }
         //播放

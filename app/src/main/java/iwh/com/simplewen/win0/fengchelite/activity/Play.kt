@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.activity_play.*
  */
 class Play : AppCompatActivity() {
     //全屏模式
-    private fun hide() {
+    private fun toggle(){
         window.decorView.systemUiVisibility =
                 View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
                 View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
@@ -28,7 +28,12 @@ class Play : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_play)
         //全屏播放
-        hide()
+        toggle()
+        playFab.setOnClickListener{
+            it.alpha = 1f
+            toggle()
+            it.alpha = .5f
+        }
         with(fullscreen_content) {
             setVideoURI(Uri.parse(intent.getStringExtra("playUrl")))
             setMediaController(MediaController(this@Play))

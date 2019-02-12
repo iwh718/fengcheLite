@@ -48,8 +48,10 @@
                 android:screenOrientation="landscape"
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <activity android:name=".activity.about"
-             >
+        <activity android:name=".activity.about">
+        </activity>
+        <activity android:name=".activity.sort"
+                  android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>
 

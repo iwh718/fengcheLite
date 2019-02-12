@@ -3,9 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
+    <group>
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/nav_like"
+
             android:icon="@drawable/fab_like"
             android:title="@string/draw_menu_like" />
         <item

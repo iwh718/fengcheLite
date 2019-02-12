@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.widget.SearchView
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
@@ -37,8 +38,9 @@ class Search : AppCompatActivity() {
                     searchListData = netM.itemsArray
                     searchAdapter.notifyDataSetChanged()
                     searchLoad.visibility = View.GONE
+                  //  Log.d("@@search:",netM.itemsArray.toString())
                     if (netM.itemsArray.isEmpty()) {
-                        searchBlank.text = "没有你要的哦！"
+                        iwhToast("没有找到哦！")
                         searchLoad.visibility = View.GONE
 
                     }
@@ -69,9 +71,9 @@ class Search : AppCompatActivity() {
 
         searchListview.onItemClickListener = AdapterView.OnItemClickListener { _, _, pos, _ ->
             with(Intent(this@Search, desc::class.java)) {
-                putExtra("itemId", netM.itemsArray[pos]!!["url"].toString())
-                putExtra("itemImg", netM.itemsArray[pos]!!["imgUrl"].toString())
-                putExtra("itemName", netM.itemsArray[pos]!!["name"].toString())
+                putExtra("itemId", netM.itemsArray[pos]!!["itemId"].toString())
+                putExtra("itemImg", netM.itemsArray[pos]!!["itemImg"].toString())
+                putExtra("itemName", netM.itemsArray[pos]!!["itemName"].toString())
                 startActivity(this)
 
             }

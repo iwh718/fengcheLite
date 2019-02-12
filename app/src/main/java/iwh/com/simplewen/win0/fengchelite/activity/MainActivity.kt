@@ -13,11 +13,14 @@ import android.support.v4.view.GravityCompat
 import android.support.v4.view.ViewPager
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.ActionBarDrawerToggle
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageView
+import android.widget.ListView
 import iwh.com.simplewen.win0.fengchelite.R
+import iwh.com.simplewen.win0.fengchelite.adapter.SearchListAdapter
 import iwh.com.simplewen.win0.fengchelite.adapter.ViewPageAdapter
 import iwh.com.simplewen.win0.fengchelite.app.*
 import iwh.com.simplewen.win0.fengchelite.modal.PreData
@@ -153,6 +156,29 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
           R.id.nav_about -> startActivity(Intent(this@MainActivity,about::class.java))
+            R.id.nav_sort ->  startActivity(Intent(this@MainActivity,sort::class.java))
+            R.id.nav_like -> {
+
+                val likeList = getSaveDM()
+                if(likeList.isNotEmpty()){
+                    val ly_like = layoutInflater.inflate(R.layout.like,null)
+                    ly_like.findViewById<ListView>(R.id.likeListView).apply {
+                        adapter = SearchListAdapter(likeList)
+                        setOnItemClickListener{
+                                _,_,pos,_ ->
+                            toDesc(likeList,pos)
+                        }
+                    }
+                    AlertDialog.Builder(this@MainActivity)
+                        .setTitle("我的收藏")
+                        .setIcon(R.drawable.fab_like)
+                        .setView(ly_like).create().show()
+                }else{
+                    iwhToast("你还没有收藏！")
+                }
+
+            }
+
         }
 
         drawer_layout.closeDrawer(GravityCompat.START)
