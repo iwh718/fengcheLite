@@ -9,10 +9,10 @@
 
             android:icon="@drawable/fab_like"
             android:title="@string/draw_menu_like" />
-        <item
+       <!-- <item
             android:id="@+id/nav_history"
             android:icon="@drawable/nav_history"
-            android:title="@string/draw_menu_history" />
+            android:title="@string/draw_menu_history" />-->
         <item
             android:id="@+id/nav_sort"
             android:icon="@drawable/nav_sort"

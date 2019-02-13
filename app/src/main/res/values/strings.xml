@@ -28,7 +28,7 @@
     <string name="author_iwh">by：IWH | 19.02.12 | v1.1</string>
     <string name="draw_menu_sort">最新榜单</string>
     <string name="about_author">IWH</string>
-    <string name="about_github">GitHub：xxxx</string>
+    <string name="about_github">GitHub：https://github.com/iwh718/fengcheLite</string>
     <string name="about_desc">
         简介：这是一个风车动漫爬虫，同步于风车web端，仅仅是一个小工具，由于风车动漫不提供直接播放源，所有视频都是通过接口解析而来，部分接口加密的资源采用webView播放。应用播放内容取决于风车的状态！\n\n
         所以：可能会有些内容，即时采用的webView也无法播放，部分动漫，前后采用了多种接口播放，可能会因为没有适配，播放不出来，请打开web端观看！

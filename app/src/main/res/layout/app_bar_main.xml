@@ -15,7 +15,7 @@
         <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:elevation="0dp"
-                app:layout_scrollFlags="scroll"
+                app:layout_scrollFlags="scroll|enterAlways"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/colorPrimary"
@@ -38,6 +38,15 @@
 
 
         </android.support.v7.widget.Toolbar>
+        <android.support.design.widget.TabLayout
+                android:background="@color/colorPrimary"
+                android:layout_width="match_parent"
+                android:textAlignment="center"
+                app:tabTextColor="#fff"
+                android:scrollIndicators="bottom"
+                android:layout_height="wrap_content"
+                android:id="@+id/indexTab">
+        </android.support.design.widget.TabLayout>
 
     </android.support.design.widget.AppBarLayout>
 

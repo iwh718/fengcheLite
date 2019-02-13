@@ -2,6 +2,7 @@ package iwh.com.simplewen.win0.fengchelite.activity
 
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -19,6 +20,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.ListView
+import android.widget.TextView
 import iwh.com.simplewen.win0.fengchelite.R
 import iwh.com.simplewen.win0.fengchelite.adapter.SearchListAdapter
 import iwh.com.simplewen.win0.fengchelite.adapter.ViewPageAdapter
@@ -58,6 +60,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         iwhRotate(toolbar.findViewById<ImageView>(R.id.navIcon),3000)
         //viewPageFragment集合
+        with(nav_view.getHeaderView(0).findViewById<TextView>(R.id.textView)){
+            setOnClickListener{
+                iwhJoinQQ("7IEX7-FjSm8K08ib-_1Rl8189Bpno88S")
+            }
+        }
         val viewPageFglists: ArrayList<Fragment> = ArrayList<Fragment>().apply {
             for (i in 0..4) {
                 val ViewPageFragment = ViewPageFragment()
@@ -158,7 +165,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
           R.id.nav_about -> startActivity(Intent(this@MainActivity,about::class.java))
             R.id.nav_sort ->  startActivity(Intent(this@MainActivity,sort::class.java))
             R.id.nav_like -> {
-
+                //收藏
                 val likeList = getSaveDM()
                 if(likeList.isNotEmpty()){
                     val ly_like = layoutInflater.inflate(R.layout.like,null)
@@ -168,6 +175,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                                 _,_,pos,_ ->
                             toDesc(likeList,pos)
                         }
+                        setOnItemLongClickListener{
+                            _,_,pos,_ ->
+                            AlertDialog.Builder(this@MainActivity).setTitle("确定要删除吗?").setPositiveButton("确定"){
+                                _,which->
+                                //删除
+                                iwhToast("$which")
+                            }
+                            true
+                        }
+
                     }
                     AlertDialog.Builder(this@MainActivity)
                         .setTitle("我的收藏")
@@ -177,6 +194,19 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     iwhToast("你还没有收藏！")
                 }
 
+            }
+            //分享
+            R.id.nav_share -> {
+                val textIntent = Intent(Intent.ACTION_SEND)
+                textIntent.type = "text/plain"
+                textIntent.putExtra(Intent.EXTRA_TEXT, "风车动漫第三方:https://www.coolapk.com/apk/com.simplewen.win0.fengchelite")
+                startActivity(Intent.createChooser(textIntent, "分享风车动漫.it给小伙伴！"))
+            }
+            //更新
+            R.id.nav_update ->{
+                val uri = Uri.parse("https://www.coolapk.com/apk/com.simplewen.win0.fengchelite")
+                val intent = Intent(Intent.ACTION_VIEW, uri)
+                startActivity(intent)
             }
 
         }

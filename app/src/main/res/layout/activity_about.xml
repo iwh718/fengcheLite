@@ -35,6 +35,8 @@
                           android:layout_height="wrap_content"/>
                 <TextView android:layout_width="match_parent"
                           android:layout_margin="10dp"
+                          android:textColor="@color/colorPrimary"
+                          android:id="@+id/github"
                           android:text="@string/about_github"
                           android:layout_height="wrap_content"/>
                 <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
