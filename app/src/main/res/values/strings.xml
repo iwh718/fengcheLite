@@ -2,12 +2,15 @@
     <string name="app_name">风车动漫.it</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">风车动漫.it | 2019.02.04 V1.1</string>
+    <string name="nav_header_title">风车动漫.it | 2019.02.16 V1.1.1</string>
     <string name="nav_header_subtitle">反馈QQ群：943543759</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_desc">desc</string>
     <string name="updesc">更新日志：\n\n
+        v1.1.1 | 2019.02.16 \n\n
+        1.修复安卓9.0下，网络请求失败. \n\n
+        2.修复侧滑菜单异常卡顿. \n\n
     v1.1 | 2019.02.12 \n\n
     1.修复多次搜索闪退bug n
     2.增加web播放模式 \n
