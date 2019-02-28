@@ -30,18 +30,6 @@
             android:id="@+id/playLoad"
             style="@style/Base.Widget.AppCompat.ProgressBar"
             android:layout_height="50dp"/>
-    <android.support.design.widget.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:fabSize="mini"
-            android:alpha=".5"
-            android:scaleType="center"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_margin="30dp"
-            app:layout_constraintStart_toStartOf="parent"
-            android:id="@+id/playFab"
-            android:backgroundTint="#fff"
-            app:srcCompat="@drawable/fab_fullplay"
-    />
+
 
 </RelativeLayout>

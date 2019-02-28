@@ -10,17 +10,9 @@
              android:id="@+id/playWebView">
 
     </WebView>
-    <android.support.design.widget.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:fabSize="mini"
-            android:alpha=".5"
-            android:scaleType="center"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_margin="30dp"
-            app:layout_constraintStart_toStartOf="parent"
-            android:id="@+id/webViewFab"
-            android:backgroundTint="#fff"
-            app:srcCompat="@drawable/fab_fullplay"
-    />
+ <ProgressBar android:layout_width="match_parent"
+              android:id="@+id/loading"
+              app:layout_constraintTop_toTopOf="parent"
+              app:layout_constraintBottom_toBottomOf="parent"
+              android:layout_height="wrap_content"/>
 </android.support.constraint.ConstraintLayout>

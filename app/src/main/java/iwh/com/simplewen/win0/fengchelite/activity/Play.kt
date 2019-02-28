@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import android.widget.MediaController
 import iwh.com.simplewen.win0.fengchelite.R
 import iwh.com.simplewen.win0.fengchelite.app.iwhToast
@@ -18,22 +19,13 @@ import kotlinx.android.synthetic.main.activity_play.*
  */
 class Play : AppCompatActivity() {
     //全屏模式
-    private fun toggle(){
-        window.decorView.systemUiVisibility =
-                View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
-                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_play)
-        //全屏播放
-        toggle()
-        playFab.setOnClickListener{
-            it.alpha = 1f
-            toggle()
-            it.alpha = .5f
-        }
+
+
         with(fullscreen_content) {
             setVideoURI(Uri.parse(intent.getStringExtra("playUrl")))
             setMediaController(MediaController(this@Play))
@@ -79,6 +71,21 @@ class Play : AppCompatActivity() {
             }
 
         }
+
+    }
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        //判断是否有焦点
+        val decorView = window.decorView
+        decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_FULLSCREEN
+                or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
+
+
+
 
     }
 
