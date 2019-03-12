@@ -8,6 +8,10 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_desc">desc</string>
     <string name="updesc">更新日志：\n\n
+        v1.1.3| 2019.03.12\n\n
+        1.修复android6.0设备闪退. \n\n
+        2.最近有点忙，等有空，会处理一些播放源的问题。\n\n
+        3.提醒：仅仅是风车动漫的小工具，不是播放大全。\n\n
         v1.1.2| 2019.02.28\n\n
         1.优化全屏播放. \n\n
         v1.1.1 | 2019.02.16 \n\n
@@ -30,7 +34,7 @@
     <string name="draw_menu_share">分享应用</string>
     <string name="actionu_theme">换个颜色</string>
     <string name="action_menu_like">好评</string>
-    <string name="author_iwh">by：IWH | 19.02.12 | v1.2</string>
+    <string name="author_iwh">by：IWH | 19.03.12 | v1.3.3</string>
     <string name="draw_menu_sort">最新榜单</string>
     <string name="about_author">IWH</string>
     <string name="about_github">GitHub：https://github.com/iwh718/fengcheLite</string>
@@ -39,6 +43,6 @@
         所以：可能会有些内容，即时采用的webView也无法播放，部分动漫，前后采用了多种接口播放，可能会因为没有适配，播放不出来，请打开web端观看！
     </string>
     <string name="about_qq">应用使用Kotlin开发，请实验性使用部分功能 \n\n(仅提供反馈，不提供资源！)群：943543759</string>
-    <string name="about_thanks">警告：本应用不提供下载，全部内容依靠风车动漫web端内容解析而来。</string>
+    <string name="about_thanks">注意：本应用不提供下载，全部内容依靠风车动漫web端内容解析而来。</string>
 
 </resources>

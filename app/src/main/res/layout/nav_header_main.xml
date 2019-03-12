@@ -17,7 +17,7 @@
         android:layout_height="60dp"
         android:contentDescription="@string/nav_header_desc"
        app:layout_constraintBottom_toTopOf="@+id/textView"
-        app:srcCompat="@drawable/logo" />
+        app:srcCompat="@mipmap/logo" />
 
     <TextView
             app:layout_constraintBottom_toBottomOf="parent"

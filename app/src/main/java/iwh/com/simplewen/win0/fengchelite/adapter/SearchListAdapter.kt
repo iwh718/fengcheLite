@@ -1,5 +1,6 @@
 package iwh.com.simplewen.win0.fengchelite.adapter
 
+import android.graphics.Color
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
@@ -18,11 +19,13 @@ class SearchListAdapter(val searchList:ArrayList<Map<String,Any>?>):BaseAdapter(
             addView(  TextView(App.getContext()).apply {
                 text = "${position+1}."
                 setPadding(10,10,10,10)
+                setTextColor(Color.BLACK)
                 layoutParams = ViewGroup.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
 
             },0)
             addView(  TextView(App.getContext()).apply {
                 setPadding(10,10,10,10)
+                setTextColor(Color.BLACK)
                 text = searchList[position]?.get("itemName").toString()
                 layoutParams = ViewGroup.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
 

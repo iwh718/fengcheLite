@@ -34,6 +34,7 @@ class DoubleListAdapter(val listData: ArrayList<Map<String, Any>>) : BaseAdapter
             putExtra("itemId", listData[pos]["itemId"].toString())
             putExtra("itemImg", listData[pos]["itemImg"].toString())
             putExtra("itemName", listData[pos]["itemName"].toString())
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             App.getContext().startActivity(this)
 
         }

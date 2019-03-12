@@ -171,6 +171,7 @@ fun toDesc(data:ArrayList<Map<String,Any>?>,pos:Int){
     with(Intent(App.getContext(), desc::class.java)) {
         putExtra("itemId",data[pos]!!["itemId"].toString())
         putExtra("itemName", data[pos]!!["itemName"].toString())
+        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         App.getContext().startActivity(this)
     }
 }
