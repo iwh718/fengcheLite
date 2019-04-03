@@ -63,9 +63,14 @@ class Play : AppCompatActivity() {
                     .setNegativeButton("返回"){
                         _ ,_ ->
                         finish()
+                    }.setNeutralButton("去浏览器看？"){
+                        _,_ ->
+                        val uri = Uri.parse(intent.getStringExtra("playUrl"))
+                        val intent = Intent(Intent.ACTION_VIEW, uri)
+                        startActivity(intent)
                     }
                     .setTitle("播放失败！")
-                    .setMessage("目前不支持该接口播放,是否使用WebView播放模式！")
+                    .setMessage("目前不支持该接口播放,是否使用WebView试一试？\n 如果持续白屏，即播放源失效！")
                     .create().show()
                 true
             }

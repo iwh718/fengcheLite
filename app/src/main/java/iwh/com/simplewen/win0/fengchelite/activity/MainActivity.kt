@@ -10,6 +10,7 @@ import android.os.Message
 import android.support.design.widget.NavigationView
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.support.v4.view.GravityCompat
 import android.support.v4.view.ViewPager
 import android.support.v4.widget.SwipeRefreshLayout
@@ -58,6 +59,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
+        window.statusBarColor = ContextCompat.getColor(this,R.color.colorPrimaryDark)
         iwhRotate(toolbar.findViewById<ImageView>(R.id.navIcon),3000)
         //viewPageFragment集合
         with(nav_view.getHeaderView(0).findViewById<TextView>(R.id.textView)){
@@ -134,12 +136,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             drawer_layout.closeDrawer(GravityCompat.START)
         } else {
             //返回桌面
-          /**  with(Intent()) {
+         with(Intent()) {
                 action = Intent.ACTION_MAIN
                 addCategory(Intent.CATEGORY_HOME)
                 startActivity(this)
-            }**/
-            finish()
+            }
+
 
         }
     }
@@ -197,21 +199,28 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             //分享
             R.id.nav_share -> {
-                val textIntent = Intent(Intent.ACTION_SEND)
-                textIntent.type = "text/plain"
-                textIntent.putExtra(Intent.EXTRA_TEXT, "风车动漫第三方:https://www.coolapk.com/apk/com.simplewen.win0.fengchelite")
-                startActivity(Intent.createChooser(textIntent, "分享风车动漫.it给小伙伴！"))
+                AlertDialog.Builder(this@MainActivity).setTitle("分享").setMessage("一些不可告知原因，无法上架，请自行解决！")
+                    .setPositiveButton("ok"){
+                            _,_ ->
+                        iwhJoinQQ("7IEX7-FjSm8K08ib-_1Rl8189Bpno88S")
+                    }
+                    .setNegativeButton("no",null)
+                    .create().show()
             }
             //更新
             R.id.nav_update ->{
-                val uri = Uri.parse("https://www.coolapk.com/apk/com.simplewen.win0.fengchelite")
-                val intent = Intent(Intent.ACTION_VIEW, uri)
-                startActivity(intent)
+               AlertDialog.Builder(this@MainActivity).setTitle("更新").setMessage("这辈子是不可能更新的，群里的老哥说话那么好听，进去聊聊人生？")
+                   .setPositiveButton("ok"){
+                       _,_ ->
+                       iwhJoinQQ("7IEX7-FjSm8K08ib-_1Rl8189Bpno88S")
+                   }
+                   .setNegativeButton("no",null)
+                   .create().show()
             }
 
         }
-
-        drawer_layout.closeDrawer(GravityCompat.START)
+       //取消自动关闭侧滑
+      //  drawer_layout.closeDrawer(GravityCompat.START)
         return true
     }
 }
