@@ -29,7 +29,7 @@
    1.首页动漫获取
    2.搜索基础
    3.播放部分
-  ![Image text](./examples_img/1.png)
+  ![Image text](./examples_img/p1.png)
   ![Image text](./examples_img/2.png)
   ![Image text](./examples_img/3.png)
   ![Image text](./examples_img/4.png)
